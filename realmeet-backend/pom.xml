@@ -19,11 +19,32 @@
 	<name>realmeet</name>
 	<description>Meet for Real</description>
 
+	<properties>
+		<openapi-generator-maven-plugin.version>4.3.1</openapi-generator-maven-plugin.version>
+		<swagger-annotations.version>1.6.2</swagger-annotations.version>
+		<openapi-spec.file>${project.basedir}/../service/src/main/resources/api.yml</openapi-spec.file>
+		<openapi-spec.classpath>classpath:api.yml</openapi-spec.classpath>
+		<api.path>br.com.sw2you.realmeet</api.path>
+	</properties>
+
 	<dependencies>
+		<!-- Spring Boot - Web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/../service/src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>api.yml</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
 
 </project>
