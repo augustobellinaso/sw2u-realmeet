@@ -1,7 +1,7 @@
 package br.com.sw2u.realmeet;
 
-import br.com.sw2you.realmeet.api.facade.RoomsApi;
-import br.com.sw2you.realmeet.api.model.Room;
+import br.com.sw2u.realmeet.api.facade.RoomsApi;
+import br.com.sw2u.realmeet.api.model.Room;
 import java.util.concurrent.CompletableFuture;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;

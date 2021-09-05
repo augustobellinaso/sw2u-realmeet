@@ -24,7 +24,7 @@
 		<swagger-annotations.version>1.6.2</swagger-annotations.version>
 		<openapi-spec.file>${project.basedir}/../service/src/main/resources/api.yml</openapi-spec.file>
 		<openapi-spec.classpath>classpath:api.yml</openapi-spec.classpath>
-		<api.path>br.com.sw2you.realmeet</api.path>
+		<api.path>br.com.sw2u.realmeet</api.path>
 	</properties>
 
 	<dependencies>

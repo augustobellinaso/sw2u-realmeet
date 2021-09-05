@@ -122,7 +122,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>br.com.sw2you.realmeet.Application</mainClass>
+                    <mainClass>br.com.sw2u.realmeet.Application</mainClass>
                 </configuration>
             </plugin>
             <plugin>
