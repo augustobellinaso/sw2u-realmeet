@@ -1,8 +1,14 @@
+# =================================
+# = SERVER
+# =================================
 server:
   port: 8080
   servlet:
     context-path: /v1
 
+# =================================
+# = SPRING
+# =================================
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -10,3 +16,11 @@ spring:
     username: root
     password: root
     type: com.zaxxer.hikari.HikariDataSource
+
+# =================================
+# = LOGGING
+# =================================
+logging:
+  level:
+    org.springframework: INFO
+    org.flywaydb: INFO
