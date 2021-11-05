@@ -88,8 +88,7 @@ public class Room {
         private Integer seats;
         private Boolean active;
 
-        private RoomBuilder() {
-        }
+        private RoomBuilder() {}
 
         public RoomBuilder id(Long id) {
             this.id = id;
