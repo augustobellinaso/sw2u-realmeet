@@ -1,17 +1,23 @@
 package br.com.sw2u.realmeet;
 
 import br.com.sw2u.realmeet.api.facade.RoomsApi;
-import br.com.sw2u.realmeet.api.model.Room;
+import br.com.sw2u.realmeet.api.model.RoomDTO;
+import br.com.sw2u.realmeet.service.RoomService;
 import java.util.concurrent.CompletableFuture;
-import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RoomsController implements RoomsApi {
 
+    private final RoomService roomService;
+
+    public RoomsController(RoomService roomService) {
+        this.roomService = roomService;
+    }
+
     @Override
-    public CompletableFuture<ResponseEntity<Room>> listRooms(@Valid Long id) {
-        return CompletableFuture.supplyAsync(() -> ResponseEntity.ok(new Room().id(1L).name("Room #1")));
+    public CompletableFuture<ResponseEntity<RoomDTO>> getRoom(Long id) {
+        return CompletableFuture.supplyAsync(() -> ResponseEntity.ok(roomService.getRoom(id)));
     }
 }
