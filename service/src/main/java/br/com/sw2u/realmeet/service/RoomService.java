@@ -2,6 +2,7 @@ package br.com.sw2u.realmeet.service;
 
 import static java.util.Objects.requireNonNull;
 
+import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
 import br.com.sw2u.realmeet.api.model.RoomDTO;
 import br.com.sw2u.realmeet.domain.entity.Room;
 import br.com.sw2u.realmeet.domain.repository.RoomRepository;
@@ -15,14 +16,36 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final RoomMapper roomMapper;
 
-    public RoomService(RoomRepository roomRepository, RoomMapper roomMapper) {
+    public RoomService(
+            RoomRepository roomRepository,
+            RoomMapper roomMapper
+    ) {
         this.roomRepository = roomRepository;
         this.roomMapper = roomMapper;
     }
 
-    public RoomDTO getRoom(Long id){
+    public RoomDTO getRoom(Long id) {
         requireNonNull(id);
-        Room room = roomRepository.findByIdAndActive(id, true).orElseThrow(() -> new RoomNotFoundException("Room #" + id + " not found"));
+        Room room = roomRepository
+                .findByIdAndActive(
+                        id,
+                        true
+                )
+                .orElseThrow(() -> new RoomNotFoundException("Room #" + id + " not found"));
         return roomMapper.fromEntityToDto(room);
+    }
+
+    public RoomDTO createRoom(CreateRoomDTO createRoomDTO) {
+        var room = Room
+                .newRoomBuilder()
+                .seats(createRoomDTO.getSeats())
+                .name(createRoomDTO.getName())
+                .build();
+        roomRepository.save(room);
+
+        return new RoomDTO()
+                .id(room.getId())
+                .name(room.getName())
+                .seats(room.getSeats());
     }
 }
