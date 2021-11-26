@@ -8,6 +8,7 @@ import br.com.sw2u.realmeet.domain.entity.Room;
 import br.com.sw2u.realmeet.domain.repository.RoomRepository;
 import br.com.sw2u.realmeet.exception.RoomNotFoundException;
 import br.com.sw2u.realmeet.mapper.RoomMapper;
+import br.com.sw2u.realmeet.validator.RoomValidator;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,13 +16,16 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
     private final RoomMapper roomMapper;
+    private final RoomValidator roomValidator;
 
     public RoomService(
             RoomRepository roomRepository,
-            RoomMapper roomMapper
+            RoomMapper roomMapper,
+            RoomValidator roomValidator
     ) {
         this.roomRepository = roomRepository;
         this.roomMapper = roomMapper;
+        this.roomValidator = roomValidator;
     }
 
     public RoomDTO getRoom(Long id) {
@@ -36,6 +40,7 @@ public class RoomService {
     }
 
     public RoomDTO createRoom(CreateRoomDTO createRoomDTO) {
+        roomValidator.validate(createRoomDTO);
         var room = roomMapper.fromCreateRoomDtoToEntity(createRoomDTO);
         roomRepository.save(room);
 
