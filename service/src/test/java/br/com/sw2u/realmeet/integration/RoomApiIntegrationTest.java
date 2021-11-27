@@ -4,7 +4,6 @@ import static br.com.sw2u.realmeet.utils.TestConstants.DEFAULT_ROOM_ID;
 import static br.com.sw2u.realmeet.utils.TestDataCreator.newCreateRoomDto;
 import static br.com.sw2u.realmeet.utils.TestDataCreator.newRoomBuilder;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import br.com.sw2u.realmeet.api.facade.RoomApi;
 import br.com.sw2u.realmeet.core.BaseIntegrationTest;
