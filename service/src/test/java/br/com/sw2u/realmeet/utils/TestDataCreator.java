@@ -13,15 +13,13 @@ public final class TestDataCreator {
     }
 
     public static RoomBuilder newRoomBuilder() {
-        return Room
-                .newRoomBuilder()
-                .name(DEFAULT_ROOM_NAME)
-                .seats(DEFAULT_ROOM_SEATS);
+        return Room.newRoomBuilder()
+                   .name(DEFAULT_ROOM_NAME)
+                   .seats(DEFAULT_ROOM_SEATS);
     }
 
     public static CreateRoomDTO newCreateRoomDto() {
-        return new CreateRoomDTO()
-                .name(DEFAULT_ROOM_NAME)
-                .seats(DEFAULT_ROOM_SEATS);
+        return new CreateRoomDTO().name(DEFAULT_ROOM_NAME)
+                                  .seats(DEFAULT_ROOM_SEATS);
     }
 }

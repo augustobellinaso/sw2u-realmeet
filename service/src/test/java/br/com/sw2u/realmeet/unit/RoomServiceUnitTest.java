@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 class RoomServiceUnitTest extends BaseUnitTest {
+
     private RoomService victim;
 
     @Mock
@@ -31,63 +32,32 @@ class RoomServiceUnitTest extends BaseUnitTest {
 
     @BeforeEach
     void setupEach() {
-        victim = new RoomService(
-                roomRepository,
-                roomMapper(),
-                roomValidator
-        );
+        victim = new RoomService(roomRepository, roomMapper(), roomValidator);
     }
 
     @Test
     void testGetRoomSuccess() {
-        var room = newRoomBuilder()
-                .id(DEFAULT_ROOM_ID)
-                .build();
-        when(roomRepository.findByIdAndActive(
-                DEFAULT_ROOM_ID,
-                true
-        )).thenReturn(Optional.of(room));
+        var room = newRoomBuilder().id(DEFAULT_ROOM_ID)
+                                   .build();
+        when(roomRepository.findByIdAndActive(DEFAULT_ROOM_ID, true)).thenReturn(Optional.of(room));
         var dto = victim.getRoom(DEFAULT_ROOM_ID);
-        assertEquals(
-                room.getName(),
-                dto.getName()
-        );
-        assertEquals(
-                room.getSeats(),
-                dto.getSeats()
-        );
-        assertEquals(
-                room.getId(),
-                dto.getId()
-        );
+        assertEquals(room.getName(), dto.getName());
+        assertEquals(room.getSeats(), dto.getSeats());
+        assertEquals(room.getId(), dto.getId());
     }
 
     @Test
     void testGetRoomNotFound() {
-        when(roomRepository.findByIdAndActive(
-                DEFAULT_ROOM_ID,
-                true
-        )).thenReturn(Optional.empty());
-        assertThrows(
-                RoomNotFoundException.class,
-                () -> victim.getRoom(DEFAULT_ROOM_ID)
-        );
+        when(roomRepository.findByIdAndActive(DEFAULT_ROOM_ID, true)).thenReturn(Optional.empty());
+        assertThrows(RoomNotFoundException.class, () -> victim.getRoom(DEFAULT_ROOM_ID));
     }
 
     @Test
     void testCreateRoomWithSuccess() {
         var createRoomDto = newCreateRoomDto();
         var roomDTO = victim.createRoom(createRoomDto);
-
-        assertEquals(
-                createRoomDto.getName(),
-                roomDTO.getName()
-        );
-        assertEquals(
-                createRoomDto.getSeats(),
-                roomDTO.getSeats()
-        );
-
+        assertEquals(createRoomDto.getName(), roomDTO.getName());
+        assertEquals(createRoomDto.getSeats(), roomDTO.getSeats());
         verify(roomRepository).save(any());
     }
 }

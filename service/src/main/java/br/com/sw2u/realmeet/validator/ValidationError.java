@@ -7,10 +7,7 @@ public class ValidationError {
     private final String field;
     private final String errorCode;
 
-    public ValidationError(
-            String field,
-            String errorCode
-    ) {
+    public ValidationError(String field, String errorCode) {
         this.field = field;
         this.errorCode = errorCode;
     }
@@ -23,8 +20,7 @@ public class ValidationError {
         return errorCode;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -32,25 +28,14 @@ public class ValidationError {
             return false;
         }
         ValidationError that = (ValidationError) o;
-        return Objects.equals(
-                field,
-                that.field
-        ) && Objects.equals(
-                errorCode,
-                that.errorCode
-        );
+        return Objects.equals(field, that.field) && Objects.equals(errorCode, that.errorCode);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                field,
-                errorCode
-        );
+    @Override public int hashCode() {
+        return Objects.hash(field, errorCode);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ValidationError[ field='" + field + "', errorCode='" + errorCode + "']";
     }
 }

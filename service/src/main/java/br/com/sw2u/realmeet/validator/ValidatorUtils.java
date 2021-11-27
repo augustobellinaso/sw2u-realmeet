@@ -33,7 +33,8 @@ public final class ValidatorUtils {
     }
 
     public static boolean validateMaxLength(String field, String fieldName, int maxLength, ValidationErrors validationErrors) {
-        if (!isBlank(field) && field.trim().length() > maxLength) {
+        if (!isBlank(field) && field.trim()
+                                    .length() > maxLength) {
             validationErrors.add(fieldName, fieldName + EXCEEDS_MAX_LENGTH);
             return false;
         }

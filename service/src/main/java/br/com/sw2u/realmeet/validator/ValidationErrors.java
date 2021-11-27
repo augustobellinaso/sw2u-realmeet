@@ -13,14 +13,8 @@ public class ValidationErrors implements Streamable<ValidationError> {
         this.validationErrorList = new ArrayList<>();
     }
 
-    public ValidationErrors add(
-            String field,
-            String errorCode
-    ) {
-        return add(new ValidationError(
-                field,
-                errorCode
-        ));
+    public ValidationErrors add(String field, String errorCode) {
+        return add(new ValidationError(field, errorCode));
     }
 
     public ValidationErrors add(ValidationError validationError) {

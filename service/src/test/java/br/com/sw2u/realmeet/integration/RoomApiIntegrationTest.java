@@ -15,100 +15,49 @@ import org.junit.jupiter.api.Test;
 
 class RoomApiIntegrationTest extends BaseIntegrationTest {
 
-    @Autowired
-    private RoomApi roomApi;
+    @Autowired private RoomApi roomApi;
+    @Autowired private RoomRepository roomRepository;
 
-    @Autowired
-    private RoomRepository roomRepository;
-
-    @Override
-    protected void setupEach() throws Exception {
-        setLocalhostBasePath(
-                roomApi.getApiClient(),
-                "/v1"
-        );
+    @Override protected void setupEach() throws Exception {
+        setLocalhostBasePath(roomApi.getApiClient(), "/v1");
     }
 
-    @Test
-    void testGetRoomByIdSuccess() {
+    @Test void testGetRoomByIdSuccess() {
         var room = newRoomBuilder().build();
         roomRepository.saveAndFlush(room);
-
         assertNotNull(room.getId());
         assertTrue(room.getActive());
-
         var dto = roomApi.getRoom(room.getId());
-
-        assertEquals(
-                room.getName(),
-                dto.getName()
-        );
-        assertEquals(
-                room.getSeats(),
-                dto.getSeats()
-        );
-        assertEquals(
-                room.getId(),
-                dto.getId()
-        );
+        assertEquals(room.getName(), dto.getName());
+        assertEquals(room.getSeats(), dto.getSeats());
+        assertEquals(room.getId(), dto.getId());
     }
 
-    @Test
-    void testGetRoomInactive() {
-        var room = newRoomBuilder()
-                .active(false)
-                .build();
+    @Test void testGetRoomInactive() {
+        var room = newRoomBuilder().active(false)
+                                   .build();
         roomRepository.saveAndFlush(room);
-
         assertFalse(room.getActive());
-
-        assertThrows(
-                HttpClientErrorException.NotFound.class,
-                () -> roomApi.getRoom(room.getId())
-        );
+        assertThrows(HttpClientErrorException.NotFound.class, () -> roomApi.getRoom(room.getId()));
     }
 
-    @Test
-    void testRoomNotExists() {
-        assertThrows(
-                HttpClientErrorException.NotFound.class,
-                () -> roomApi.getRoom(DEFAULT_ROOM_ID)
-        );
+    @Test void testRoomNotExists() {
+        assertThrows(HttpClientErrorException.NotFound.class, () -> roomApi.getRoom(DEFAULT_ROOM_ID));
     }
 
-    @Test
-    void testCreateRoomWithSuccess() {
+    @Test void testCreateRoomWithSuccess() {
         var createRoomDto = newCreateRoomDto();
         var roomDto = roomApi.createRoom(createRoomDto);
-
-        assertEquals(
-                createRoomDto.getName(),
-                roomDto.getName()
-        );
-        assertEquals(
-                createRoomDto.getSeats(),
-                roomDto.getSeats()
-        );
+        assertEquals(createRoomDto.getName(), roomDto.getName());
+        assertEquals(createRoomDto.getSeats(), roomDto.getSeats());
         assertNotNull(roomDto.getId());
-
-        var room = roomRepository
-                .findById(roomDto.getId())
-                .orElseThrow();
-        assertEquals(
-                roomDto.getName(),
-                room.getName()
-        );
-        assertEquals(
-                roomDto.getSeats(),
-                room.getSeats()
-        );
+        var room = roomRepository.findById(roomDto.getId())
+                                 .orElseThrow();
+        assertEquals(roomDto.getName(), room.getName());
+        assertEquals(roomDto.getSeats(), room.getSeats());
     }
 
-    @Test
-    void testCreateRoomValidationError() {
-        assertThrows(
-                HttpClientErrorException.UnprocessableEntity.class,
-                () -> roomApi.createRoom(newCreateRoomDto().name(null))
-        );
+    @Test void testCreateRoomValidationError() {
+        assertThrows(HttpClientErrorException.UnprocessableEntity.class, () -> roomApi.createRoom(newCreateRoomDto().name(null)));
     }
 }

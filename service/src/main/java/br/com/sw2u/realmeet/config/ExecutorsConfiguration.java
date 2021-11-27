@@ -11,20 +11,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ExecutorsConfiguration {
 
-    @Bean
-    public Executor controllersExecutor(
+    @Bean public Executor controllersExecutor(
             @Value("${realmeet.taskExecutor.pool.coreSize:10}") int corePoolSize,
             @Value("${realmeet.taskExecutor.pool.maxSize:20}") int maxPoolSize,
             @Value("${realmeet.taskExecutor.pool.keepAliveSeconds: 50}") int queueCapacity,
             @Value("${realmeet.taskExecutor.pool.coreSize:60}") int keepAliveSeconds
     ) {
-        return new ThreadPoolExecutor(corePoolSize,
-                                      maxPoolSize,
-                                      keepAliveSeconds,
-                                      TimeUnit.SECONDS,
-                                      new ArrayBlockingQueue<>(queueCapacity,
-                                                               true
-                                      )
-        );
+        return new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveSeconds, TimeUnit.SECONDS, new ArrayBlockingQueue<>(queueCapacity, true));
     }
 }

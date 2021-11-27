@@ -18,11 +18,7 @@ public class RoomService {
     private final RoomMapper roomMapper;
     private final RoomValidator roomValidator;
 
-    public RoomService(
-            RoomRepository roomRepository,
-            RoomMapper roomMapper,
-            RoomValidator roomValidator
-    ) {
+    public RoomService(RoomRepository roomRepository, RoomMapper roomMapper, RoomValidator roomValidator) {
         this.roomRepository = roomRepository;
         this.roomMapper = roomMapper;
         this.roomValidator = roomValidator;
@@ -30,12 +26,8 @@ public class RoomService {
 
     public RoomDTO getRoom(Long id) {
         requireNonNull(id);
-        Room room = roomRepository
-                .findByIdAndActive(
-                        id,
-                        true
-                )
-                .orElseThrow(() -> new RoomNotFoundException("Room #" + id + " not found"));
+        Room room = roomRepository.findByIdAndActive(id, true)
+                                  .orElseThrow(() -> new RoomNotFoundException("Room #" + id + " not found"));
         return roomMapper.fromEntityToDto(room);
     }
 
@@ -43,7 +35,6 @@ public class RoomService {
         roomValidator.validate(createRoomDTO);
         var room = roomMapper.fromCreateRoomDtoToEntity(createRoomDTO);
         roomRepository.save(room);
-
         return roomMapper.fromEntityToDto(room);
     }
 }
