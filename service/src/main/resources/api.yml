@@ -78,15 +78,12 @@ components:
     ResponseError:
       type: object
       required:
-        - code
-        - message
+        - errorCode
+        - field
       properties:
-        code:
-          type: integer
-          format: int32
-        status:
+        field:
           type: string
-        message:
+        errorCode:
           type: string
 
   responses:
@@ -95,4 +92,6 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            type: array
+            items:
+              $ref: '#/components/schemas/ResponseError'
