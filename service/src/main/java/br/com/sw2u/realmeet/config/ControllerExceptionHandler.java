@@ -5,7 +5,6 @@ import static br.com.sw2u.realmeet.util.ResponseEntityUtils.notFound;
 import br.com.sw2u.realmeet.api.model.ResponseError;
 import br.com.sw2u.realmeet.exception.InvalidRequestException;
 import br.com.sw2u.realmeet.exception.RoomNotFoundException;
-import br.com.sw2u.realmeet.util.ResponseEntityUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
