@@ -13,6 +13,7 @@ public final class ValidatorConstants {
     public static final String EXCEEDS_MAX_LENGTH = ".exceedsMaxLength";
     public static final String EXCEEDS_MAX_VALUE = ".exceedsMaxValue";
     public static final String BELOW_MIN_VALUE = ".belowMinValue";
+    public static final String ROOM_NAME_DUPLICATED = ".duplicated";
 
 
     private ValidatorConstants() {

@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
     Optional<Room> findByIdAndActive(Long id, Boolean active);
+
+    Optional<Room> findByNameAndActive(String name, Boolean active);
 }
