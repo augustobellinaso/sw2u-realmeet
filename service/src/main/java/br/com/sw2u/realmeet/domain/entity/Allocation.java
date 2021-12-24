@@ -1,0 +1,166 @@
+package br.com.sw2u.realmeet.domain.entity;
+
+import br.com.sw2u.realmeet.domain.model.Employee;
+import java.time.OffsetDateTime;
+import java.util.Objects;
+
+public class Allocation {
+
+    private Long id;
+
+    private Room room;
+
+    private Employee employee;
+
+    private String subject;
+
+    private OffsetDateTime startAt;
+
+    private OffsetDateTime endAt;
+
+    private OffsetDateTime createdAt;
+
+    private OffsetDateTime updatedAt;
+
+    public Allocation() {
+    }
+
+    private Allocation(AllocationBuilder builder) {
+        this.id = builder.id;
+        this.room = builder.room;
+        this.employee = builder.employee;
+        this.subject = builder.subject;
+        this.startAt = builder.startAt;
+        this.endAt = builder.endAt;
+        this.createdAt = builder.createdAt;
+        this.updatedAt = builder.updatedAt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public OffsetDateTime getStartAt() {
+        return startAt;
+    }
+
+    public OffsetDateTime getEndAt() {
+        return endAt;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Allocation that = (Allocation) o;
+        return Objects.equals(id, that.id) && Objects.equals(room, that.room) && Objects.equals(employee, that.employee) &&
+               Objects.equals(subject, that.subject) && Objects.equals(startAt, that.startAt) &&
+               Objects.equals(endAt, that.endAt) && Objects.equals(createdAt, that.createdAt) &&
+               Objects.equals(updatedAt, that.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, room, employee, subject, startAt, endAt, createdAt, updatedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "Allocation{" +
+               "id=" + id +
+               ", room=" + room +
+               ", employee=" + employee +
+               ", subject='" + subject + '\'' +
+               ", startAt=" + startAt +
+               ", endAt=" + endAt +
+               ", createdAt=" + createdAt +
+               ", updatedAt=" + updatedAt +
+               '}';
+    }
+
+    public static AllocationBuilder newAllocationBuilder() {
+        return new AllocationBuilder();
+    }
+
+    public static final class AllocationBuilder {
+        private Long id;
+        private Room room;
+        private Employee employee;
+        private String subject;
+        private OffsetDateTime startAt;
+        private OffsetDateTime endAt;
+        private OffsetDateTime createdAt;
+        private OffsetDateTime updatedAt;
+
+        private AllocationBuilder() {
+        }
+
+        public AllocationBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public AllocationBuilder room(Room room) {
+            this.room = room;
+            return this;
+        }
+
+        public AllocationBuilder employee(Employee employee) {
+            this.employee = employee;
+            return this;
+        }
+
+        public AllocationBuilder subject(String subject) {
+            this.subject = subject;
+            return this;
+        }
+
+        public AllocationBuilder startAt(OffsetDateTime startAt) {
+            this.startAt = startAt;
+            return this;
+        }
+
+        public AllocationBuilder endAt(OffsetDateTime endAt) {
+            this.endAt = endAt;
+            return this;
+        }
+
+        public AllocationBuilder createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public AllocationBuilder updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public Allocation build() {
+            return new Allocation(this);
+        }
+    }
+}
