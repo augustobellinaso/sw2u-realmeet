@@ -3,23 +3,36 @@ package br.com.sw2u.realmeet.domain.entity;
 import br.com.sw2u.realmeet.domain.model.Employee;
 import java.time.OffsetDateTime;
 import java.util.Objects;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "allocation")
 public class Allocation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "room_id")
     private Room room;
 
+    @Embedded
     private Employee employee;
 
+    @Column(name = "subject")
     private String subject;
 
+    @Column(name = "start_at")
     private OffsetDateTime startAt;
 
+    @Column(name = "end_at")
     private OffsetDateTime endAt;
 
+    @Column(name = "created_at")
     private OffsetDateTime createdAt;
 
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
     public Allocation() {
@@ -102,7 +115,7 @@ public class Allocation {
                '}';
     }
 
-    public static AllocationBuilder newAllocationBuilder() {
+    public static AllocationBuilder newAllocation() {
         return new AllocationBuilder();
     }
 
