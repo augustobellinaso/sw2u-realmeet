@@ -2,9 +2,12 @@ package br.com.sw2u.realmeet.validator;
 
 import static br.com.sw2u.realmeet.validator.ValidatorConstants.*;
 import static br.com.sw2u.realmeet.validator.ValidatorUtils.*;
+import static java.util.Objects.isNull;
 
 import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
+import br.com.sw2u.realmeet.api.model.UpdateRoomDTO;
 import br.com.sw2u.realmeet.domain.repository.RoomRepository;
+import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,7 +23,19 @@ public class RoomValidator {
         var validationErrors = new ValidationErrors();
 
         if (validateRoomName(createRoomDTO.getName(), validationErrors) && validateRoomSeats(createRoomDTO.getSeats(), validationErrors)) {
-            validateDuplicatedName(createRoomDTO.getName(), validationErrors);
+            validateDuplicatedName(null, createRoomDTO.getName(), validationErrors);
+        }
+
+        throwOnError(validationErrors);
+    }
+
+    public void validate(Long roomId, UpdateRoomDTO updateRoomDTO) {
+        var validationErrors = new ValidationErrors();
+
+        if (validateRequired(roomId, ROOM_ID, validationErrors) &&
+            validateRoomName(updateRoomDTO.getName(), validationErrors) &&
+            validateRoomSeats(updateRoomDTO.getSeats(), validationErrors)) {
+            validateDuplicatedName(roomId, updateRoomDTO.getName(), validationErrors);
         }
 
         throwOnError(validationErrors);
@@ -41,10 +56,13 @@ public class RoomValidator {
         );
     }
 
-    public void validateDuplicatedName(String name, ValidationErrors validationErrors) {
+    public void validateDuplicatedName(Long roomIdToExclude, String name, ValidationErrors validationErrors) {
         roomRepository.findByNameAndActive(name, true)
-                      .ifPresent(__ ->
-                                         validationErrors.add(ROOM_NAME, ROOM_NAME + ROOM_NAME_DUPLICATED)
+                      .ifPresent(room -> {
+                                     if (!isNull(roomIdToExclude) && !Objects.equals(room.getId(), roomIdToExclude)) {
+                                         validationErrors.add(ROOM_NAME, ROOM_NAME + ROOM_NAME_DUPLICATED);
+                                     }
+                                 }
                       );
     }
 }
