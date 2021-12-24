@@ -6,6 +6,7 @@ import static br.com.sw2u.realmeet.utils.TestDataCreator.newRoomBuilder;
 import static org.junit.jupiter.api.Assertions.*;
 
 import br.com.sw2u.realmeet.api.facade.RoomApi;
+import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
 import br.com.sw2u.realmeet.core.BaseIntegrationTest;
 import br.com.sw2u.realmeet.domain.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ class RoomApiIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test void testCreateRoomValidationError() {
-        assertThrows(HttpClientErrorException.UnprocessableEntity.class, () -> roomApi.createRoom(newCreateRoomDto().name(null)));
+        assertThrows(HttpClientErrorException.UnprocessableEntity.class, () -> roomApi.createRoom((CreateRoomDTO) newCreateRoomDto().name(null)));
     }
 
     @Test
