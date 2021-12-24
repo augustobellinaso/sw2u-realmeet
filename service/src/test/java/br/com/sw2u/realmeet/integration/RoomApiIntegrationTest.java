@@ -59,4 +59,17 @@ class RoomApiIntegrationTest extends BaseIntegrationTest {
     @Test void testCreateRoomValidationError() {
         assertThrows(HttpClientErrorException.UnprocessableEntity.class, () -> roomApi.createRoom(newCreateRoomDto().name(null)));
     }
+
+    @Test
+    void testDeleteRoomSuccess() {
+        var roomId = roomRepository.saveAndFlush(newRoomBuilder().build()).getId();
+        roomApi.deleteRoom(roomId);
+
+        assertFalse(roomRepository.findById(roomId).orElseThrow().getActive());
+    }
+
+    @Test
+    void testDeleteRoomDoesNotExist() {
+        assertThrows(HttpClientErrorException.NotFound.class, () -> roomApi.deleteRoom(1L));
+    }
 }
