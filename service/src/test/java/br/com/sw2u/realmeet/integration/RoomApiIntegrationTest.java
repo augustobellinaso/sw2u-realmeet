@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import br.com.sw2u.realmeet.api.facade.RoomApi;
 import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
+import br.com.sw2u.realmeet.api.model.UpdateRoomDTO;
 import br.com.sw2u.realmeet.core.BaseIntegrationTest;
 import br.com.sw2u.realmeet.domain.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,19 @@ import org.junit.jupiter.api.Test;
 
 class RoomApiIntegrationTest extends BaseIntegrationTest {
 
-    @Autowired private RoomApi roomApi;
-    @Autowired private RoomRepository roomRepository;
+    @Autowired
+    private RoomApi roomApi;
 
-    @Override protected void setupEach() throws Exception {
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Override
+    protected void setupEach() throws Exception {
         setLocalhostBasePath(roomApi.getApiClient(), "/v1");
     }
 
-    @Test void testGetRoomByIdSuccess() {
+    @Test
+    void testGetRoomByIdSuccess() {
         var room = newRoomBuilder().build();
         roomRepository.saveAndFlush(room);
         assertNotNull(room.getId());
@@ -33,7 +39,8 @@ class RoomApiIntegrationTest extends BaseIntegrationTest {
         assertEquals(room.getId(), dto.getId());
     }
 
-    @Test void testGetRoomInactive() {
+    @Test
+    void testGetRoomInactive() {
         var room = newRoomBuilder().active(false)
                                    .build();
         roomRepository.saveAndFlush(room);
@@ -41,11 +48,13 @@ class RoomApiIntegrationTest extends BaseIntegrationTest {
         assertThrows(HttpClientErrorException.NotFound.class, () -> roomApi.getRoom(room.getId()));
     }
 
-    @Test void testRoomNotExists() {
+    @Test
+    void testRoomNotExists() {
         assertThrows(HttpClientErrorException.NotFound.class, () -> roomApi.getRoom(DEFAULT_ROOM_ID));
     }
 
-    @Test void testCreateRoomWithSuccess() {
+    @Test
+    void testCreateRoomWithSuccess() {
         var createRoomDto = newCreateRoomDto();
         var roomDto = roomApi.createRoom(createRoomDto);
         assertEquals(createRoomDto.getName(), roomDto.getName());
@@ -57,20 +66,48 @@ class RoomApiIntegrationTest extends BaseIntegrationTest {
         assertEquals(roomDto.getSeats(), room.getSeats());
     }
 
-    @Test void testCreateRoomValidationError() {
+    @Test
+    void testCreateRoomValidationError() {
         assertThrows(HttpClientErrorException.UnprocessableEntity.class, () -> roomApi.createRoom((CreateRoomDTO) newCreateRoomDto().name(null)));
     }
 
     @Test
     void testDeleteRoomSuccess() {
-        var roomId = roomRepository.saveAndFlush(newRoomBuilder().build()).getId();
+        var roomId = roomRepository.saveAndFlush(newRoomBuilder().build())
+                                   .getId();
         roomApi.deleteRoom(roomId);
 
-        assertFalse(roomRepository.findById(roomId).orElseThrow().getActive());
+        assertFalse(roomRepository.findById(roomId)
+                                  .orElseThrow()
+                                  .getActive());
     }
 
     @Test
     void testDeleteRoomDoesNotExist() {
         assertThrows(HttpClientErrorException.NotFound.class, () -> roomApi.deleteRoom(1L));
+    }
+
+    @Test
+    void testUpdateRoomSuccess() {
+        var room = roomRepository.saveAndFlush(newRoomBuilder().build());
+        var updateRoomDTO = new UpdateRoomDTO().name(room.getName() + "_")
+                                               .seats(room.getSeats() + 1);
+
+        roomApi.updateRoom(room.getId(), updateRoomDTO);
+
+        var udpatedRoom = roomRepository.findById(room.getId())
+                                        .orElseThrow();
+        assertEquals(updateRoomDTO.getName(), udpatedRoom.getName());
+        assertEquals(updateRoomDTO.getSeats(), udpatedRoom.getSeats());
+    }
+
+    @Test
+    void testUpdateRoomDoesNotExist() {
+        assertThrows(HttpClientErrorException.NotFound.class, () -> roomApi.updateRoom(1L, new UpdateRoomDTO().name("Room").seats(10)));
+    }
+
+    @Test
+    void testUpdateRoomValidationError() {
+        assertThrows(HttpClientErrorException.UnprocessableEntity.class, () -> roomApi.updateRoom(1L, new UpdateRoomDTO().name(null).seats(10)));
     }
 }
