@@ -10,8 +10,7 @@ import static br.com.sw2u.realmeet.utils.MapperUtils.allocationMapper;
 import static br.com.sw2u.realmeet.utils.MapperUtils.roomMapper;
 import static br.com.sw2u.realmeet.utils.TestConstants.DEFAULT_ROOM_ID;
 import static br.com.sw2u.realmeet.utils.TestDataCreator.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AllocationMapperUnitTest extends BaseUnitTest {
 
@@ -37,10 +36,12 @@ class AllocationMapperUnitTest extends BaseUnitTest {
     
     @Test
     void testFromEntityToAllocationDTO() {
-        var allocation = newAllocationBuilder(newRoomBuilder().build()).build();
+        var allocation = newAllocationBuilder(newRoomBuilder().id(1L).build()).build();
         var allocationDto = victim.fromEntityToAllocationDTO(allocation);
         
         assertEquals(allocation.getId(), allocationDto.getId());
+        assertEquals(allocation.getRoom().getId(), allocationDto.getRoomId());
+        assertNotNull(allocationDto.getRoomId());
         assertEquals(allocation.getStartAt(), allocationDto.getStartAt());
         assertEquals(allocation.getEndAt(), allocationDto.getEndAt());
         assertEquals(allocation.getSubject(), allocationDto.getSubject());
