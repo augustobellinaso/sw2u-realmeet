@@ -40,4 +40,17 @@ class AllocationApiIntegrationTest extends BaseIntegrationTest {
         assertTrue(createAllocationDTO.getStartAt().isEqual(allocationDTO.getStartAt()));
         assertTrue(createAllocationDTO.getEndAt().isEqual(allocationDTO.getEndAt()));
     }
+    
+    @Test
+    void testCreateAllocationValidationError() {
+        var room = roomRepository.saveAndFlush(newRoomBuilder().build());
+        var createAllocationDTO = newCreateAllocationDto().roomId(room.getId()).subject(null);
+    
+        assertThrows(HttpClientErrorException.UnprocessableEntity.class, () -> api.createAllocation(createAllocationDTO));
+    }
+    
+    @Test
+    void testCreateAllocationValidationErrorWhenRoomNotFound() {
+        assertThrows(HttpClientErrorException.NotFound.class, () -> api.createAllocation(newCreateAllocationDto()));
+    }
 }
