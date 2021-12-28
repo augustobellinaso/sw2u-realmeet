@@ -2,6 +2,8 @@ package br.com.sw2u.realmeet.service;
 
 import br.com.sw2u.realmeet.api.model.AllocationDTO;
 import br.com.sw2u.realmeet.api.model.CreateAllocationDTO;
+import br.com.sw2u.realmeet.api.model.UpdateAllocationDTO;
+import br.com.sw2u.realmeet.domain.entity.Allocation;
 import br.com.sw2u.realmeet.domain.repository.AllocationRepository;
 import br.com.sw2u.realmeet.domain.repository.RoomRepository;
 import br.com.sw2u.realmeet.exception.AllocationCannotBeDeletedException;
@@ -11,6 +13,7 @@ import br.com.sw2u.realmeet.mapper.AllocationMapper;
 import br.com.sw2u.realmeet.util.DateUtils;
 import br.com.sw2u.realmeet.validator.AllocationValidator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static br.com.sw2u.realmeet.util.DateUtils.*;
 
@@ -41,12 +44,23 @@ public class AllocationService {
     }
     
     public void deleteAllocation(Long allocationId) {
-        var allocation = allocationRepository.findById(allocationId)
-                .orElseThrow(() -> new AllocationNotFoundException("Allocation #" + allocationId + " not found"));
+        var allocation = getAllocationOrThrow(allocationId);
         
         if (allocation.getEndAt().isBefore(now())) {
             throw new AllocationCannotBeDeletedException();
         }
         allocationRepository.delete(allocation);
+    }
+    
+    @Transactional
+    public void updateAllocation(Long allocationId, UpdateAllocationDTO updateAllocationDTO) {
+        getAllocationOrThrow(allocationId);
+        allocationRepository.updateAllocation(allocationId, updateAllocationDTO.getSubject(), updateAllocationDTO.getStartAt(),
+                                              updateAllocationDTO.getEndAt());
+    }
+    
+    private Allocation getAllocationOrThrow(Long allocationId) {
+        return allocationRepository.findById(allocationId)
+                .orElseThrow(() -> new AllocationNotFoundException("Allocation #" + allocationId + " not found"));
     }
 }
