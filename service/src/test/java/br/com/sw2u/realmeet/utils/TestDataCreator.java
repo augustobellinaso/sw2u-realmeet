@@ -2,6 +2,7 @@ package br.com.sw2u.realmeet.utils;
 
 import br.com.sw2u.realmeet.api.model.CreateAllocationDTO;
 import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
+import br.com.sw2u.realmeet.api.model.UpdateAllocationDTO;
 import br.com.sw2u.realmeet.domain.entity.Allocation;
 import br.com.sw2u.realmeet.domain.entity.Allocation.AllocationBuilder;
 import br.com.sw2u.realmeet.domain.entity.Room;
@@ -47,6 +48,12 @@ public final class TestDataCreator {
                 .roomId(DEFAULT_ROOM_ID)
                 .employeeEmail(DEFAULT_EMPLOYEE_EMAIL)
                 .employeeName(DEFAULT_EMPLOYEE_NAME)
+                .startAt(DEFAULT_ALLOCATION_START_AT)
+                .endAt(DEFAULT_ALLOCATION_END_AT);
+    }
+    
+    public static UpdateAllocationDTO newUpdateAllocationDto() {
+        return new UpdateAllocationDTO().subject(DEFAULT_ALLOCATION_SUBJECT)
                 .startAt(DEFAULT_ALLOCATION_START_AT)
                 .endAt(DEFAULT_ALLOCATION_END_AT);
     }
