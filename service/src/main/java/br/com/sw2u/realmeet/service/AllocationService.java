@@ -7,15 +7,15 @@ import br.com.sw2u.realmeet.domain.entity.Allocation;
 import br.com.sw2u.realmeet.domain.repository.AllocationRepository;
 import br.com.sw2u.realmeet.domain.repository.RoomRepository;
 import br.com.sw2u.realmeet.exception.AllocationCannotBeDeletedException;
+import br.com.sw2u.realmeet.exception.AllocationCannotBeUpdatedException;
 import br.com.sw2u.realmeet.exception.AllocationNotFoundException;
 import br.com.sw2u.realmeet.exception.RoomNotFoundException;
 import br.com.sw2u.realmeet.mapper.AllocationMapper;
-import br.com.sw2u.realmeet.util.DateUtils;
 import br.com.sw2u.realmeet.validator.AllocationValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static br.com.sw2u.realmeet.util.DateUtils.*;
+import static br.com.sw2u.realmeet.util.DateUtils.now;
 
 @Service
 public class AllocationService {
@@ -46,7 +46,7 @@ public class AllocationService {
     public void deleteAllocation(Long allocationId) {
         var allocation = getAllocationOrThrow(allocationId);
         
-        if (allocation.getEndAt().isBefore(now())) {
+        if (isAllocationInThePast(allocation)) {
             throw new AllocationCannotBeDeletedException();
         }
         allocationRepository.delete(allocation);
@@ -54,7 +54,14 @@ public class AllocationService {
     
     @Transactional
     public void updateAllocation(Long allocationId, UpdateAllocationDTO updateAllocationDTO) {
-        getAllocationOrThrow(allocationId);
+        var allocation = getAllocationOrThrow(allocationId);
+        
+        allocationValidator.validate(allocationId, updateAllocationDTO);
+        
+        if (isAllocationInThePast(allocation)) {
+            throw new AllocationCannotBeUpdatedException();
+        }
+        
         allocationRepository.updateAllocation(allocationId, updateAllocationDTO.getSubject(), updateAllocationDTO.getStartAt(),
                                               updateAllocationDTO.getEndAt());
     }
@@ -62,5 +69,9 @@ public class AllocationService {
     private Allocation getAllocationOrThrow(Long allocationId) {
         return allocationRepository.findById(allocationId)
                 .orElseThrow(() -> new AllocationNotFoundException("Allocation #" + allocationId + " not found"));
+    }
+    
+    private boolean isAllocationInThePast(Allocation allocation) {
+        return allocation.getEndAt().isBefore(now());
     }
 }
