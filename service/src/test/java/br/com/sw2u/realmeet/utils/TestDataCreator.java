@@ -3,11 +3,10 @@ package br.com.sw2u.realmeet.utils;
 import br.com.sw2u.realmeet.api.model.CreateAllocationDTO;
 import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
 import br.com.sw2u.realmeet.api.model.UpdateAllocationDTO;
-import br.com.sw2u.realmeet.domain.entity.Allocation;
 import br.com.sw2u.realmeet.domain.entity.Allocation.AllocationBuilder;
 import br.com.sw2u.realmeet.domain.entity.Room;
 import br.com.sw2u.realmeet.domain.entity.Room.RoomBuilder;
-import br.com.sw2u.realmeet.domain.model.Employee;
+import br.com.sw2u.realmeet.domain.model.Employee.EmployeeBuilder;
 
 import static br.com.sw2u.realmeet.domain.entity.Allocation.newAllocation;
 import static br.com.sw2u.realmeet.domain.model.Employee.newEmployee;
@@ -56,5 +55,11 @@ public final class TestDataCreator {
         return new UpdateAllocationDTO().subject(DEFAULT_ALLOCATION_SUBJECT)
                 .startAt(DEFAULT_ALLOCATION_START_AT)
                 .endAt(DEFAULT_ALLOCATION_END_AT);
+    }
+    
+    public static EmployeeBuilder newEmployeeBuilder() {
+        return newEmployee()
+                .email(DEFAULT_EMPLOYEE_EMAIL)
+                .name(DEFAULT_EMPLOYEE_NAME);
     }
 }
