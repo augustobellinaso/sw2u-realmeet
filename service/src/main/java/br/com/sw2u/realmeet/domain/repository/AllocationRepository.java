@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Repository
 public interface AllocationRepository extends JpaRepository<Allocation, Long> {
@@ -16,4 +17,13 @@ public interface AllocationRepository extends JpaRepository<Allocation, Long> {
     @Query("UPDATE Allocation a SET a.subject = :subject, a.startAt = :startAt, a.endAt = :endAt WHERE a.id = :allocationId")
     void updateAllocation(@Param("allocationId") Long allocationId, @Param("subject") String subject, @Param("startAt") OffsetDateTime startAt,
             @Param("endAt") OffsetDateTime endAt);
+    
+    @Query("SELECT a FROM Allocation a WHERE " +
+            "(:employeeEmail IS NULL OR a.employee.email = :employeeEmail) AND " +
+            "(:roomId IS NULL OR a.roomId = :roomId) AND " +
+            "(:startAt IS NULL OR a.startAt >= :startAt) AND " +
+            "(:endAt IS NULL OR a.endAt <= :endAt)")
+    List<Allocation> findAllAllocationsWithFilters(@Param("employeeEmail") String employeeEmail, @Param("roomId") Long roomId, @Param("startAt") OffsetDateTime startAt,
+            @Param("endAt") OffsetDateTime endAt);
+    
 }

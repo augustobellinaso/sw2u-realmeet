@@ -15,6 +15,10 @@ import br.com.sw2u.realmeet.validator.AllocationValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import static br.com.sw2u.realmeet.util.DateUtils.now;
 
 @Service
@@ -64,6 +68,12 @@ public class AllocationService {
         
         allocationRepository.updateAllocation(allocationId, updateAllocationDTO.getSubject(), updateAllocationDTO.getStartAt(),
                                               updateAllocationDTO.getEndAt());
+    }
+    
+    public List<AllocationDTO> listAllocations(String employeeEmail, Long roomId, LocalDate startAt,
+            LocalDate endAt) {
+        
+        return new ArrayList<>();
     }
     
     private Allocation getAllocationOrThrow(Long allocationId) {
