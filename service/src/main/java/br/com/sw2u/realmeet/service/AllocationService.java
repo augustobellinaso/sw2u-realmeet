@@ -16,10 +16,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import static br.com.sw2u.realmeet.util.DateUtils.DEFAULT_TIME_ZONE;
 import static br.com.sw2u.realmeet.util.DateUtils.now;
+import static java.util.Objects.isNull;
 
 @Service
 public class AllocationService {
@@ -29,8 +34,11 @@ public class AllocationService {
     private final AllocationRepository allocationRepository;
     private final AllocationValidator allocationValidator;
     
-    public AllocationService(AllocationMapper allocationMapper, RoomRepository roomRepository,
-            AllocationRepository allocationRepository, AllocationValidator allocationValidator) {
+    public AllocationService(
+            AllocationMapper allocationMapper,
+            RoomRepository roomRepository,
+            AllocationRepository allocationRepository,
+            AllocationValidator allocationValidator) {
         this.allocationMapper = allocationMapper;
         this.roomRepository = roomRepository;
         this.allocationRepository = allocationRepository;
@@ -57,7 +65,9 @@ public class AllocationService {
     }
     
     @Transactional
-    public void updateAllocation(Long allocationId, UpdateAllocationDTO updateAllocationDTO) {
+    public void updateAllocation(
+            Long allocationId,
+            UpdateAllocationDTO updateAllocationDTO) {
         var allocation = getAllocationOrThrow(allocationId);
         
         allocationValidator.validate(allocationId, updateAllocationDTO);
@@ -70,10 +80,21 @@ public class AllocationService {
                                               updateAllocationDTO.getEndAt());
     }
     
-    public List<AllocationDTO> listAllocations(String employeeEmail, Long roomId, LocalDate startAt,
+    public List<AllocationDTO> listAllocations(
+            String employeeEmail,
+            Long roomId,
+            LocalDate startAt,
             LocalDate endAt) {
         
-        return new ArrayList<>();
+        var allocations = allocationRepository.findAllAllocationsWithFilters(
+                employeeEmail,
+                roomId,
+                isNull(startAt) ? null :
+                        startAt.atTime(LocalTime.MIN).atOffset(DEFAULT_TIME_ZONE),
+                isNull(endAt) ? null :
+                        endAt.atTime(LocalTime.MAX).atOffset(DEFAULT_TIME_ZONE));
+        
+        return allocations.stream().map(allocationMapper::fromEntityToAllocationDTO).collect(Collectors.toList());
     }
     
     private Allocation getAllocationOrThrow(Long allocationId) {

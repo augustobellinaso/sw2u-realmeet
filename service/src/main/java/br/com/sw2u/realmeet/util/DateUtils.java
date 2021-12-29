@@ -7,7 +7,7 @@ import static java.time.temporal.ChronoUnit.MILLIS;
 
 public final class DateUtils {
     
-    private static final ZoneOffset DEFAULT_TIME_ZONE = ZoneOffset.of("-03:00");
+    public static final ZoneOffset DEFAULT_TIME_ZONE = ZoneOffset.of("-03:00");
     
     private DateUtils() {
     }
