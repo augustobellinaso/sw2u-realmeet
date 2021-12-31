@@ -28,10 +28,13 @@ logging:
     org.flywaydb: INFO
 
 # =================================
-# = THREADPOOLSIZE
+# = REALMEET
 # =================================
 realmeet:
   taskExecutor:
     pool:
       coreSize: 20
       maxSize: 20
+  allocations:
+    maxFilterLimit: 50
+

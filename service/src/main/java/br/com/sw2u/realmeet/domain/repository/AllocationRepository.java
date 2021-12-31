@@ -1,6 +1,7 @@
 package br.com.sw2u.realmeet.domain.repository;
 
 import br.com.sw2u.realmeet.domain.entity.Allocation;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,6 +25,6 @@ public interface AllocationRepository extends JpaRepository<Allocation, Long> {
             "(:startAt IS NULL OR a.startAt >= :startAt) AND " +
             "(:endAt IS NULL OR a.endAt <= :endAt)")
     List<Allocation> findAllAllocationsWithFilters(@Param("employeeEmail") String employeeEmail, @Param("roomId") Long roomId, @Param("startAt") OffsetDateTime startAt,
-            @Param("endAt") OffsetDateTime endAt);
+            @Param("endAt") OffsetDateTime endAt, Pageable pageable);
     
 }

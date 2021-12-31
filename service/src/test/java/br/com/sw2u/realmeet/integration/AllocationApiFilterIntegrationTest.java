@@ -36,7 +36,7 @@ class AllocationApiFilterIntegrationTest extends BaseIntegrationTest {
         var allocation2 = allocationRepository.saveAndFlush(newAllocationBuilder(room).subject(DEFAULT_ALLOCATION_SUBJECT + "2").build());
         var allocation3 = allocationRepository.saveAndFlush(newAllocationBuilder(room).subject(DEFAULT_ALLOCATION_SUBJECT + "3").build());
         
-        var allocationsDTOList = api.listAllocations(null, null, null, null);
+        var allocationsDTOList = api.listAllocations(null, null, null, null, null, null, null);
         
         assertEquals(3, allocationsDTOList.size());
         assertEquals(allocation1.getSubject(), allocationsDTOList.get(0).getSubject());
@@ -53,7 +53,7 @@ class AllocationApiFilterIntegrationTest extends BaseIntegrationTest {
         var allocation2 = allocationRepository.saveAndFlush(newAllocationBuilder(roomA).build());
         allocationRepository.saveAndFlush(newAllocationBuilder(roomB).build());
     
-        var allocationsDTOList = api.listAllocations(null, roomA.getId(), null, null);
+        var allocationsDTOList = api.listAllocations(null, roomA.getId(), null, null, null, null, null);
     
         assertEquals(2, allocationsDTOList.size());
         assertEquals(allocation1.getId(), allocationsDTOList.get(0).getId());
@@ -71,7 +71,7 @@ class AllocationApiFilterIntegrationTest extends BaseIntegrationTest {
         var allocation2 = allocationRepository.saveAndFlush(newAllocationBuilder(room).employee(employee1).build());
         allocationRepository.saveAndFlush(newAllocationBuilder(room).employee(employee2).build());
         
-        var allocationsDTOList = api.listAllocations(employee1.getEmail(), null, null, null);
+        var allocationsDTOList = api.listAllocations(employee1.getEmail(), null, null, null, null, null, null);
         
         assertEquals(2, allocationsDTOList.size());
         assertEquals(allocation1.getEmployee().getEmail(), allocationsDTOList.get(0).getEmployeeEmail());
@@ -89,7 +89,7 @@ class AllocationApiFilterIntegrationTest extends BaseIntegrationTest {
         var allocation2 = allocationRepository.saveAndFlush(newAllocationBuilder(room).startAt(baseStartAt.plusHours(4)).endAt(baseStartAt.plusHours(5)).build());
         var allocation3 = allocationRepository.saveAndFlush(newAllocationBuilder(room).startAt(baseEndAt.plusHours(5)).endAt(baseEndAt.plusHours(6)).build());
         
-        var allocationsDTOList = api.listAllocations(null, null, baseStartAt.toLocalDate(), baseEndAt.toLocalDate());
+        var allocationsDTOList = api.listAllocations(null, null, baseStartAt.toLocalDate(), baseEndAt.toLocalDate(), null, null, null);
         
         assertEquals(2, allocationsDTOList.size());
         assertEquals(allocation1.getId(), allocationsDTOList.get(0).getId());

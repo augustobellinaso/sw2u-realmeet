@@ -19,6 +19,7 @@ public final class ValidatorConstants {
     public static final int ALLOCATION_EMPLOYEE_NAME_MAX_LENGTH = 20;
     public static final int ALLOCATION_EMPLOYEE_EMAIL_MAX_LENGTH = 30;
     public static final long ALLOCATION_MAX_DURATION_SECONDS = 4 * 60 * 60;
+    public static final String ORDER_BY = "orderBy";
     
     public static final String MISSING = ".missing";
     public static final String EXCEEDS_MAX_LENGTH = ".exceedsMaxLength";
@@ -28,6 +29,7 @@ public final class ValidatorConstants {
     public static final String INCONSISTENT = ".incosistent";
     public static final String IN_THE_PAST = ".theThePast";
     public static final String EXCEEDS_DURATION = ".exceedsDuration";
+    public static final String INVALID = ".invalid";
     
     private ValidatorConstants() {
     }
