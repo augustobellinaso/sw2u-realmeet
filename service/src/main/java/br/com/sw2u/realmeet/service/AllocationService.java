@@ -76,7 +76,7 @@ public class AllocationService {
             UpdateAllocationDTO updateAllocationDTO) {
         var allocation = getAllocationOrThrow(allocationId);
         
-        allocationValidator.validate(allocationId, updateAllocationDTO);
+        allocationValidator.validate(allocationId, allocation.getRoom().getId(), updateAllocationDTO);
         
         if (isAllocationInThePast(allocation)) {
             throw new AllocationCannotBeUpdatedException();

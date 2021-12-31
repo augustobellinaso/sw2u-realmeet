@@ -11,6 +11,7 @@ import org.mockito.Mock;
 
 import static br.com.sw2u.realmeet.util.DateUtils.now;
 import static br.com.sw2u.realmeet.utils.TestConstants.DEFAULT_ALLOCATION_ID;
+import static br.com.sw2u.realmeet.utils.TestConstants.DEFAULT_ROOM_ID;
 import static br.com.sw2u.realmeet.utils.TestDataCreator.newUpdateAllocationDto;
 import static br.com.sw2u.realmeet.validator.ValidatorConstants.*;
 import static org.apache.commons.lang3.StringUtils.rightPad;
@@ -31,14 +32,14 @@ class AllocationUpdateValidatorUnitTest extends BaseUnitTest {
 
     @Test
     void testValidateWhenAllocationIsValid() {
-        victim.validate(DEFAULT_ALLOCATION_ID, newUpdateAllocationDto());
+        victim.validate(DEFAULT_ALLOCATION_ID, DEFAULT_ROOM_ID, newUpdateAllocationDto());
     }
     
     @Test
     void testValidateWhenAllocationIdIsMissing() {
         var exception = assertThrows(
                 InvalidRequestException.class,
-                () -> victim.validate(null, newUpdateAllocationDto())
+                () -> victim.validate(null, DEFAULT_ROOM_ID, newUpdateAllocationDto())
         );
         
         assertEquals(1, exception.getValidationErrors()
@@ -51,7 +52,7 @@ class AllocationUpdateValidatorUnitTest extends BaseUnitTest {
     void testValidateWhenSubjectIsMissing() {
         var exception = assertThrows(
                 InvalidRequestException.class,
-                () -> victim.validate(DEFAULT_ALLOCATION_ID, newUpdateAllocationDto().subject(null))
+                () -> victim.validate(DEFAULT_ALLOCATION_ID, DEFAULT_ROOM_ID, newUpdateAllocationDto().subject(null))
         );
 
         assertEquals(1, exception.getValidationErrors()
@@ -63,7 +64,7 @@ class AllocationUpdateValidatorUnitTest extends BaseUnitTest {
     @Test
     void testValidateWhenSubjectExceedsMaxLength() {
         var exception = assertThrows(InvalidRequestException.class,
-                                     () -> victim.validate(DEFAULT_ALLOCATION_ID, newUpdateAllocationDto().subject(rightPad("X", ALLOCATION_SUJECT_MAX_LENGTH + 1, "X")))
+                                     () -> victim.validate(DEFAULT_ALLOCATION_ID, DEFAULT_ROOM_ID, newUpdateAllocationDto().subject(rightPad("X", ALLOCATION_SUJECT_MAX_LENGTH + 1, "X")))
         );
         assertEquals(1, exception.getValidationErrors()
                 .getNumberOfErrors());
@@ -75,7 +76,7 @@ class AllocationUpdateValidatorUnitTest extends BaseUnitTest {
     void testValidateWhenStartAtIsMissing() {
         var exception = assertThrows(
                 InvalidRequestException.class,
-                () -> victim.validate(DEFAULT_ALLOCATION_ID, newUpdateAllocationDto().startAt(null))
+                () -> victim.validate(DEFAULT_ALLOCATION_ID, DEFAULT_ROOM_ID, newUpdateAllocationDto().startAt(null))
         );
         
         assertEquals(1, exception.getValidationErrors()
@@ -88,7 +89,7 @@ class AllocationUpdateValidatorUnitTest extends BaseUnitTest {
     void testValidateWhenEndAtIsMissing() {
         var exception = assertThrows(
                 InvalidRequestException.class,
-                () -> victim.validate(DEFAULT_ALLOCATION_ID, newUpdateAllocationDto().endAt(null))
+                () -> victim.validate(DEFAULT_ALLOCATION_ID, DEFAULT_ROOM_ID, newUpdateAllocationDto().endAt(null))
         );
         
         assertEquals(1, exception.getValidationErrors()
@@ -101,7 +102,7 @@ class AllocationUpdateValidatorUnitTest extends BaseUnitTest {
     void testValidateWhenDateOrderIsInvalid() {
         var exception = assertThrows(
                 InvalidRequestException.class,
-                () -> victim.validate(DEFAULT_ALLOCATION_ID, newUpdateAllocationDto().startAt(now().plusDays(1L)).endAt(now().plusDays(1L).minusMinutes(30L)))
+                () -> victim.validate(DEFAULT_ALLOCATION_ID, DEFAULT_ROOM_ID, newUpdateAllocationDto().startAt(now().plusDays(1L)).endAt(now().plusDays(1L).minusMinutes(30L)))
         );
         
         assertEquals(1, exception.getValidationErrors()
@@ -114,7 +115,7 @@ class AllocationUpdateValidatorUnitTest extends BaseUnitTest {
     void testValidateWhenDateIsInThePast() {
         var exception = assertThrows(
                 InvalidRequestException.class,
-                () -> victim.validate(DEFAULT_ALLOCATION_ID, newUpdateAllocationDto().startAt(now().minusMinutes(30L)).endAt(now().plusMinutes(30L)))
+                () -> victim.validate(DEFAULT_ALLOCATION_ID, DEFAULT_ROOM_ID, newUpdateAllocationDto().startAt(now().minusMinutes(30L)).endAt(now().plusMinutes(30L)))
         );
         
         assertEquals(1, exception.getValidationErrors()
@@ -127,7 +128,7 @@ class AllocationUpdateValidatorUnitTest extends BaseUnitTest {
     void testValidateWhenDateIntervalExceedsMaxDuration() {
         var exception = assertThrows(
                 InvalidRequestException.class,
-                () -> victim.validate(DEFAULT_ALLOCATION_ID, newUpdateAllocationDto().startAt(now().plusDays(1L)).endAt(now().plusDays(1L).plusSeconds(ALLOCATION_MAX_DURATION_SECONDS + 1)))
+                () -> victim.validate(DEFAULT_ALLOCATION_ID, DEFAULT_ROOM_ID, newUpdateAllocationDto().startAt(now().plusDays(1L)).endAt(now().plusDays(1L).plusSeconds(ALLOCATION_MAX_DURATION_SECONDS + 1)))
         );
         
         assertEquals(1, exception.getValidationErrors()
