@@ -92,7 +92,7 @@ public class AllocationValidator {
     }
     
     private void validateIfTimeIsAvailable(Long roomId, OffsetDateTime startAt, OffsetDateTime endAt, ValidationErrors validationErrors) {
-        allocationRepository.findAllAllocationsWithFilters(null, roomId, now(), null, PageRequest.of(9, Integer.MAX_VALUE, Sort.unsorted()))
+        allocationRepository.findAllAllocationsWithFilters(null, roomId, now(), endAt)
                 .stream()
                 .filter(a -> isOverlapping(startAt, endAt, a.getStartAt(), a.getEndAt()))
                 .findFirst()
