@@ -1,21 +1,20 @@
 package br.com.sw2u.realmeet.config;
 
-import static br.com.sw2u.realmeet.util.ResponseEntityUtils.notFound;
-
 import br.com.sw2u.realmeet.api.model.ResponseError;
 import br.com.sw2u.realmeet.exception.AllocationNotFoundException;
 import br.com.sw2u.realmeet.exception.InvalidRequestException;
 import br.com.sw2u.realmeet.exception.RoomNotFoundException;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static br.com.sw2u.realmeet.util.ResponseEntityUtils.notFound;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {

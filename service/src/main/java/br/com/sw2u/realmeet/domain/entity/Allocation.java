@@ -1,12 +1,11 @@
 package br.com.sw2u.realmeet.domain.entity;
 
 import br.com.sw2u.realmeet.domain.model.Employee;
-import br.com.sw2u.realmeet.util.DateUtils;
 
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.*;
 
 import static br.com.sw2u.realmeet.util.DateUtils.now;
 import static java.util.Objects.isNull;

@@ -1,7 +1,5 @@
 package br.com.sw2u.realmeet.service;
 
-import static java.util.Objects.requireNonNull;
-
 import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
 import br.com.sw2u.realmeet.api.model.RoomDTO;
 import br.com.sw2u.realmeet.api.model.UpdateRoomDTO;
@@ -12,6 +10,8 @@ import br.com.sw2u.realmeet.mapper.RoomMapper;
 import br.com.sw2u.realmeet.validator.RoomValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static java.util.Objects.requireNonNull;
 
 @Service
 public class RoomService {

@@ -1,18 +1,19 @@
 package br.com.sw2u.realmeet.controller;
 
-import static java.util.concurrent.CompletableFuture.runAsync;
-import static java.util.concurrent.CompletableFuture.supplyAsync;
-
 import br.com.sw2u.realmeet.api.facade.RoomsApi;
 import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
 import br.com.sw2u.realmeet.api.model.RoomDTO;
 import br.com.sw2u.realmeet.api.model.UpdateRoomDTO;
 import br.com.sw2u.realmeet.service.RoomService;
 import br.com.sw2u.realmeet.util.ResponseEntityUtils;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
+import static java.util.concurrent.CompletableFuture.runAsync;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 @RestController
 public class RoomsController implements RoomsApi {

@@ -1,14 +1,15 @@
 package br.com.sw2u.realmeet.validator;
 
-import static br.com.sw2u.realmeet.validator.ValidatorConstants.*;
-import static br.com.sw2u.realmeet.validator.ValidatorUtils.*;
-import static java.util.Objects.isNull;
-
 import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
 import br.com.sw2u.realmeet.api.model.UpdateRoomDTO;
 import br.com.sw2u.realmeet.domain.repository.RoomRepository;
-import java.util.Objects;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
+
+import static br.com.sw2u.realmeet.validator.ValidatorConstants.*;
+import static br.com.sw2u.realmeet.validator.ValidatorUtils.*;
+import static java.util.Objects.isNull;
 
 @Component
 public class RoomValidator {

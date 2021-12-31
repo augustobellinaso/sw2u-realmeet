@@ -1,7 +1,6 @@
 package br.com.sw2u.realmeet.exception;
 
 import br.com.sw2u.realmeet.validator.ValidationError;
-import br.com.sw2u.realmeet.validator.ValidationErrors;
 
 import static br.com.sw2u.realmeet.validator.ValidatorConstants.INVALID;
 import static br.com.sw2u.realmeet.validator.ValidatorConstants.ORDER_BY;

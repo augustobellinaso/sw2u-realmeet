@@ -1,8 +1,8 @@
 package br.com.sw2u.realmeet.domain.model;
 
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 @Embeddable
 public class Employee {

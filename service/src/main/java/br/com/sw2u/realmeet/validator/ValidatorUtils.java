@@ -1,10 +1,10 @@
 package br.com.sw2u.realmeet.validator;
 
+import br.com.sw2u.realmeet.exception.InvalidRequestException;
+
 import static br.com.sw2u.realmeet.validator.ValidatorConstants.*;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
-
-import br.com.sw2u.realmeet.exception.InvalidRequestException;
 
 public final class ValidatorUtils {
 
