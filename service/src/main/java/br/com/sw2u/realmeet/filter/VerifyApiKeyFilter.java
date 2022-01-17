@@ -31,15 +31,14 @@ public class VerifyApiKeyFilter extends GenericFilterBean {
     }
     
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         var httpRequest = (HttpServletRequest) servletRequest;
         var httpResponse = (HttpServletResponse) servletResponse;
         
         var apiKey = httpRequest.getHeader(HEADER_API_KEY);
         
-        if (isBlank(apiKey)) {
-            sendUnauthorizedError(httpResponse, apiKey);
-        } else if (isValidApiKey(apiKey)) {
+        if (!isBlank(apiKey) && isValidApiKey(apiKey)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             sendUnauthorizedError(httpResponse, apiKey);
