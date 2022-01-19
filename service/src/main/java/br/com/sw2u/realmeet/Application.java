@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
-@ConfigurationPropertiesScan
+@ConfigurationPropertiesScan("br.com.sw2u.realmeet.config.properties")
 public class Application {
 
     public static void main(String[] args) {
