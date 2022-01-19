@@ -7,6 +7,7 @@ import br.com.sw2u.realmeet.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
@@ -42,6 +43,7 @@ public class EmailSender {
         this.templateEngine = templateEngine;
     }
     
+    @Async
     public void send(EmailInfo emailInfo) {
         LOGGER.info("Sending e-mail with subject '{}' to '{}'", emailInfo.getSubject(), emailInfo.getTo());
         
@@ -51,6 +53,9 @@ public class EmailSender {
         addBasicDetails(emailInfo, mimeMessage);
         addHtmlBody(emailInfo.getTemplate(), emailInfo.gettemplateData(), multipart);
         addAttachments(emailInfo.getAttachments(), multipart);
+        setContent(mimeMessage, multipart);
+        
+        javaMailSender.send(mimeMessage);
     }
     
     private void addBasicDetails(EmailInfo emailInfo, MimeMessage mimeMessage) {
@@ -102,6 +107,14 @@ public class EmailSender {
                         }
                     }
             );
+        }
+    }
+    
+    private void setContent(MimeMessage mimeMessage, MimeMultipart multipart) {
+        try {
+            mimeMessage.setContent(multipart);
+        } catch (MessagingException e) {
+            throwEmailSendingException(e, "Error setting content to MIME Message");
         }
     }
     
