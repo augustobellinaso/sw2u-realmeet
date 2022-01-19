@@ -13,7 +13,7 @@ public class EmailInfo {
     private final String subject;
     private final List<Attachment> attachments;
     private final String template;
-    private final Map<String, Object> templateDate;
+    private final Map<String, Object> templateData;
     
     private EmailInfo(
             EmailInfoBuilder builder) {
@@ -24,7 +24,7 @@ public class EmailInfo {
         this.subject = builder.subject;
         this.attachments = builder.attachments;
         this.template = builder.template;
-        this.templateDate = builder.templateDate;
+        this.templateData = builder.templateData;
     }
     
     public String getFrom() {
@@ -55,8 +55,8 @@ public class EmailInfo {
         return template;
     }
     
-    public Map<String, Object> getTemplateDate() {
-        return templateDate;
+    public Map<String, Object> gettemplateData() {
+        return templateData;
     }
     
     @Override
@@ -69,7 +69,7 @@ public class EmailInfo {
                 ", subject='" + subject + '\'' +
                 ", attachments=" + attachments +
                 ", template='" + template + '\'' +
-                ", templateDate=" + templateDate +
+                ", templateData=" + templateData +
                 '}';
     }
     
@@ -81,12 +81,12 @@ public class EmailInfo {
         return Objects.equals(from, emailInfo.from) && Objects.equals(to, emailInfo.to) &&
                 Objects.equals(cc, emailInfo.cc) && Objects.equals(bcc, emailInfo.bcc) &&
                 Objects.equals(subject, emailInfo.subject) && Objects.equals(attachments, emailInfo.attachments) &&
-                Objects.equals(template, emailInfo.template) && Objects.equals(templateDate, emailInfo.templateDate);
+                Objects.equals(template, emailInfo.template) && Objects.equals(templateData, emailInfo.templateData);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(from, to, cc, bcc, subject, attachments, template, templateDate);
+        return Objects.hash(from, to, cc, bcc, subject, attachments, template, templateData);
     }
     
     public static EmailInfoBuilder newEmailInfoBuilder() {
@@ -101,7 +101,7 @@ public class EmailInfo {
         private String subject;
         private List<Attachment> attachments;
         private String template;
-        private Map<String, Object> templateDate;
+        private Map<String, Object> templateData;
         
         private EmailInfoBuilder() {
         }
@@ -141,8 +141,8 @@ public class EmailInfo {
             return this;
         }
         
-        public EmailInfoBuilder templateDate(Map<String, Object> templateDate) {
-            this.templateDate = templateDate;
+        public EmailInfoBuilder templateData(Map<String, Object> templateData) {
+            this.templateData = templateData;
             return this;
         }
         

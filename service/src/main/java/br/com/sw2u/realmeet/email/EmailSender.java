@@ -8,11 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.ITemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
+import java.util.Map;
 
 import static br.com.sw2u.realmeet.util.StringUtils.join;
 import static java.util.Objects.nonNull;
@@ -21,6 +25,8 @@ import static java.util.Objects.nonNull;
 public class EmailSender {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailSender.class);
+    
+    private static final String TEXT_HTML_CHARSET_UTF_8 = "text/html;charset=UTF-8";
     
     private final JavaMailSender javaMailSender;
     private final ITemplateEngine templateEngine;
@@ -37,6 +43,7 @@ public class EmailSender {
         var multipart = new MimeMultipart();
     
         addBasicDetails(emailInfo, mimeMessage);
+        addHtmlBody(emailInfo.getTemplate(), emailInfo.gettemplateData(), multipart);
     }
     
     private void addBasicDetails(EmailInfo emailInfo, MimeMessage mimeMessage) {
@@ -54,6 +61,22 @@ public class EmailSender {
             }
         } catch (MessagingException e) {
             throwEmailSendingException(e, "Error adding data to MIME Message");
+        }
+    }
+    
+    private void addHtmlBody(String template, Map<String, Object> templateData, MimeMultipart multipart) {
+        var messageHtmlPart = new MimeBodyPart();
+        var context = new Context();
+        
+        if (nonNull(template)) {
+            context.setVariables(templateData);
+        }
+        
+        try {
+            messageHtmlPart.setContent(templateEngine.process(template, context), TEXT_HTML_CHARSET_UTF_8);
+            multipart.addBodyPart(messageHtmlPart);
+        } catch (MessagingException e) {
+            throwEmailSendingException(e, "Error adding HTML body to MIME Message");
         }
     }
     
