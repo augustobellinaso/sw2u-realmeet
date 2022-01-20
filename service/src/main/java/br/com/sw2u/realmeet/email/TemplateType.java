@@ -2,9 +2,9 @@ package br.com.sw2u.realmeet.email;
 
 public enum TemplateType {
     
-    ALLOCATION_CREATED("allocation-created"),
-    ALLOCATION_UPDATED("allocation-updated"),
-    ALLOCATION_DELETED("allocation-deleted");
+    ALLOCATION_CREATED("allocationCreated"),
+    ALLOCATION_UPDATED("allocationUpdated"),
+    ALLOCATION_DELETED("allocationDeleted");
     
     String templateName;
     
