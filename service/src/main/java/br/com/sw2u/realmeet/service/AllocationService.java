@@ -36,6 +36,7 @@ public class AllocationService {
     private final RoomRepository roomRepository;
     private final AllocationRepository allocationRepository;
     private final AllocationValidator allocationValidator;
+    private final NotificationService notificationService;
     private final int maxLimit;
     
     public AllocationService(
@@ -43,11 +44,13 @@ public class AllocationService {
             RoomRepository roomRepository,
             AllocationRepository allocationRepository,
             AllocationValidator allocationValidator,
+            NotificationService notificationService,
             @Value(ALLOCATION_MAX_FILTER_LIMIT) int maxLimit) {
         this.allocationMapper = allocationMapper;
         this.roomRepository = roomRepository;
         this.allocationRepository = allocationRepository;
         this.allocationValidator = allocationValidator;
+        this.notificationService = notificationService;
         this.maxLimit = maxLimit;
     }
     
@@ -58,6 +61,7 @@ public class AllocationService {
         
         var allocation = allocationMapper.fromCreateAllocationDTOToEntity(createAllocationDTO, room);
         allocationRepository.save(allocation);
+        notificationService.notifyAllocationCreated(allocation);
         return allocationMapper.fromEntityToAllocationDTO(allocation);
     }
     
@@ -68,6 +72,7 @@ public class AllocationService {
             throw new AllocationCannotBeDeletedException();
         }
         allocationRepository.delete(allocation);
+        notificationService.notifyAllocationDeleted(allocation);
     }
     
     @Transactional
@@ -84,6 +89,7 @@ public class AllocationService {
         
         allocationRepository.updateAllocation(allocationId, updateAllocationDTO.getSubject(), updateAllocationDTO.getStartAt(),
                                               updateAllocationDTO.getEndAt());
+        notificationService.notifyAllocationUpdated(getAllocationOrThrow(allocationId));
     }
     
     public List<AllocationDTO> listAllocations(
