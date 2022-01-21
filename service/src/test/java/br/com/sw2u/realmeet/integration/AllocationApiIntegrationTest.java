@@ -4,8 +4,10 @@ import br.com.sw2u.realmeet.api.facade.AllocationApi;
 import br.com.sw2u.realmeet.core.BaseIntegrationTest;
 import br.com.sw2u.realmeet.domain.repository.AllocationRepository;
 import br.com.sw2u.realmeet.domain.repository.RoomRepository;
+import br.com.sw2u.realmeet.email.EmailSender;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.client.HttpClientErrorException;
 
 import static br.com.sw2u.realmeet.util.DateUtils.now;
@@ -24,13 +26,16 @@ class AllocationApiIntegrationTest extends BaseIntegrationTest {
     @Autowired
     private AllocationRepository allocationRepository;
     
+    @MockBean
+    private EmailSender emailSender;
+    
     @Override
     protected void setupEach() throws Exception {
         setLocalhostBasePath(api.getApiClient(), "/v1");
     }
     
     @Test
-    void testCreateRoomWithSuccess() {
+    void testCreateAllocationWithSuccess() {
         var room = roomRepository.saveAndFlush(newRoomBuilder().build());
         var createAllocationDTO = newCreateAllocationDto().roomId(room.getId());
         var allocationDTO = api.createAllocation(TEST_CLIENT_API_KEY, createAllocationDTO);

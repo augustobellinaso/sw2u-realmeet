@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 import static br.com.sw2u.realmeet.email.TemplateType.*;
+import static br.com.sw2u.realmeet.util.Constants.ALLOCATION_KEY;
 
 @Service
 public class NotificationService {
-    
-    private static final String ALLOCATION = "allocation";
     
     private final EmailSender emailSender;
     private final EmailInfoBuilder emailInfoBuilder;
@@ -37,6 +36,6 @@ public class NotificationService {
     
     private void notify(Allocation allocation, TemplateType templateType) {
         this.emailSender.send(emailInfoBuilder.createEmailInfo(allocation.getEmployee().getEmail(), templateType,
-                                                               Map.of(ALLOCATION, allocation)));
+                                                               Map.of(ALLOCATION_KEY, allocation)));
     }
 }
