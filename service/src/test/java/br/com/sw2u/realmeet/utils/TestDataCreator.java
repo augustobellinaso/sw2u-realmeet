@@ -3,13 +3,11 @@ package br.com.sw2u.realmeet.utils;
 import br.com.sw2u.realmeet.api.model.CreateAllocationDTO;
 import br.com.sw2u.realmeet.api.model.CreateRoomDTO;
 import br.com.sw2u.realmeet.api.model.UpdateAllocationDTO;
-import br.com.sw2u.realmeet.domain.entity.Allocation.AllocationBuilder;
 import br.com.sw2u.realmeet.domain.entity.Room;
-import br.com.sw2u.realmeet.domain.entity.Room.RoomBuilder;
-import br.com.sw2u.realmeet.domain.model.Employee.EmployeeBuilder;
+import br.com.sw2u.realmeet.domain.model.Employee;
+import br.com.sw2u.realmeet.domain.model.Employee.Builder;
 
-import static br.com.sw2u.realmeet.domain.entity.Allocation.newAllocation;
-import static br.com.sw2u.realmeet.domain.model.Employee.newEmployee;
+import static br.com.sw2u.realmeet.domain.entity.Allocation.newBuilder;
 import static br.com.sw2u.realmeet.utils.TestConstants.*;
 
 public final class TestDataCreator {
@@ -17,16 +15,16 @@ public final class TestDataCreator {
     private TestDataCreator() {
     }
     
-    public static RoomBuilder newRoomBuilder() {
-        return Room.newRoomBuilder()
+    public static Room.Builder newRoomBuilder() {
+        return Room.newBuilder()
                 .name(DEFAULT_ROOM_NAME)
                 .seats(DEFAULT_ROOM_SEATS);
     }
     
-    public static AllocationBuilder newAllocationBuilder(Room room) {
-        return newAllocation()
+    public static br.com.sw2u.realmeet.domain.entity.Allocation.Builder newAllocationBuilder(Room room) {
+        return newBuilder()
                 .employee(
-                        newEmployee()
+                        Employee.newBuilder()
                                 .email(DEFAULT_EMPLOYEE_EMAIL)
                                 .name(DEFAULT_EMPLOYEE_NAME)
                                 .build()
@@ -57,8 +55,8 @@ public final class TestDataCreator {
                 .endAt(DEFAULT_ALLOCATION_END_AT);
     }
     
-    public static EmployeeBuilder newEmployeeBuilder() {
-        return newEmployee()
+    public static Builder newEmployeeBuilder() {
+        return Employee.newBuilder()
                 .email(DEFAULT_EMPLOYEE_EMAIL)
                 .name(DEFAULT_EMPLOYEE_NAME);
     }

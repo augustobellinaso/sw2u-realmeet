@@ -45,7 +45,7 @@ public class Allocation {
     public Allocation() {
     }
 
-    private Allocation(AllocationBuilder builder) {
+    private Allocation(Builder builder) {
         this.id = builder.id;
         this.room = builder.room;
         this.employee = builder.employee;
@@ -135,11 +135,11 @@ public class Allocation {
                '}';
     }
 
-    public static AllocationBuilder newAllocation() {
-        return new AllocationBuilder();
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
-    public static final class AllocationBuilder {
+    public static final class Builder {
         private Long id;
         private Room room;
         private Employee employee;
@@ -149,45 +149,45 @@ public class Allocation {
         private OffsetDateTime createdAt;
         private OffsetDateTime updatedAt;
 
-        private AllocationBuilder() {
+        private Builder() {
         }
 
-        public AllocationBuilder id(Long id) {
+        public Builder id(Long id) {
             this.id = id;
             return this;
         }
 
-        public AllocationBuilder room(Room room) {
+        public Builder room(Room room) {
             this.room = room;
             return this;
         }
 
-        public AllocationBuilder employee(Employee employee) {
+        public Builder employee(Employee employee) {
             this.employee = employee;
             return this;
         }
 
-        public AllocationBuilder subject(String subject) {
+        public Builder subject(String subject) {
             this.subject = subject;
             return this;
         }
 
-        public AllocationBuilder startAt(OffsetDateTime startAt) {
+        public Builder startAt(OffsetDateTime startAt) {
             this.startAt = startAt;
             return this;
         }
 
-        public AllocationBuilder endAt(OffsetDateTime endAt) {
+        public Builder endAt(OffsetDateTime endAt) {
             this.endAt = endAt;
             return this;
         }
 
-        public AllocationBuilder createdAt(OffsetDateTime createdAt) {
+        public Builder createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public AllocationBuilder updatedAt(OffsetDateTime updatedAt) {
+        public Builder updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }

@@ -78,34 +78,34 @@ public class Room {
                 '}';
     }
 
-    public static RoomBuilder newRoomBuilder() {
-        return new RoomBuilder();
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
-    public static final class RoomBuilder {
+    public static final class Builder {
         private Long id;
         private String name;
         private Integer seats;
         private Boolean active;
 
-        private RoomBuilder() {}
+        private Builder() {}
 
-        public RoomBuilder id(Long id) {
+        public Builder id(Long id) {
             this.id = id;
             return this;
         }
 
-        public RoomBuilder name(String name) {
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public RoomBuilder seats(Integer seats) {
+        public Builder seats(Integer seats) {
             this.seats = seats;
             return this;
         }
 
-        public RoomBuilder active(Boolean active) {
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }

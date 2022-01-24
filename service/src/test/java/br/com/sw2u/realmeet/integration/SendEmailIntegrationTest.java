@@ -3,7 +3,6 @@ package br.com.sw2u.realmeet.integration;
 import br.com.sw2u.realmeet.core.BaseIntegrationTest;
 import br.com.sw2u.realmeet.email.EmailSender;
 import br.com.sw2u.realmeet.email.model.EmailInfo;
-import br.com.sw2u.realmeet.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ class SendEmailIntegrationTest extends BaseIntegrationTest {
     @Test
     void testSendEmail() {
         when(javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
-        var emailInfo = EmailInfo.newEmailInfoBuilder()
+        var emailInfo = EmailInfo.newBuilder()
                 .from(EMAIL_ADDRESS)
                 .to(List.of(EMAIL_ADDRESS))
                 .subject(EMAIL_SUBJECT)

@@ -4,12 +4,10 @@ import br.com.sw2u.realmeet.core.BaseUnitTest;
 import br.com.sw2u.realmeet.domain.entity.Room;
 import br.com.sw2u.realmeet.domain.repository.AllocationRepository;
 import br.com.sw2u.realmeet.exception.InvalidRequestException;
-import br.com.sw2u.realmeet.util.DateUtils;
 import br.com.sw2u.realmeet.validator.AllocationValidator;
 import br.com.sw2u.realmeet.validator.ValidationError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 
 import java.time.LocalDate;
@@ -204,7 +202,7 @@ class AllocationCreateValidatorUnitTest extends BaseUnitTest {
             OffsetDateTime newAllocationEnd) {
         
         given(allocationRepository.findAllAllocationsWithFilters(any(), any(), any(), any())).willReturn(List.of(newAllocationBuilder(
-                Room.newRoomBuilder().build()).startAt(scheduledAllocationStart).endAt(scheduledAllocationEnd).build()));
+                Room.newBuilder().build()).startAt(scheduledAllocationStart).endAt(scheduledAllocationEnd).build()));
         
         try {
             victim.validate(newCreateAllocationDto().startAt(newAllocationStart).endAt(newAllocationEnd));

@@ -34,7 +34,7 @@ public class Client {
     
     }
     
-    private Client(ClientBuilder builder) {
+    private Client(Builder builder) {
         this.apiKey = builder.apiKey;
         this.description = builder.description;
         this.active = builder.active;
@@ -64,29 +64,29 @@ public class Client {
     }
     
     
-    public static ClientBuilder newClientBuilder() {
-        return new ClientBuilder();
+    public static Builder newBuilder() {
+        return new Builder();
     }
     
-    public static final class ClientBuilder {
+    public static final class Builder {
         private String apiKey;
         private String description;
         private Boolean active;
         
-        private ClientBuilder() {
+        private Builder() {
         }
         
-        public ClientBuilder apiKey(String apiKey) {
+        public Builder apiKey(String apiKey) {
             this.apiKey = apiKey;
             return this;
         }
         
-        public ClientBuilder description(String description) {
+        public Builder description(String description) {
             this.description = description;
             return this;
         }
         
-        public ClientBuilder active(Boolean active) {
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }

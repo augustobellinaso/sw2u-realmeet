@@ -9,7 +9,7 @@ public class Attachment {
     private final String contentType;
     private final String fileName;
     
-    private Attachment(AttachmentBuilder builder) {
+    private Attachment(Builder builder) {
         this.inputStream = builder.inputStream;
         this.contentType = builder.contentType;
         this.fileName = builder.fileName;
@@ -50,29 +50,29 @@ public class Attachment {
         return Objects.hash(inputStream, contentType, fileName);
     }
     
-    public static AttachmentBuilder newAttachmentBuilder() {
-        return new AttachmentBuilder();
+    public static Builder newBuilder() {
+        return new Builder();
     }
     
-    public static final class AttachmentBuilder {
+    public static final class Builder {
         private InputStream inputStream;
         private String contentType;
         private String fileName;
         
-        private AttachmentBuilder() {
+        private Builder() {
         }
         
-        public AttachmentBuilder inputStream(InputStream inputStream) {
+        public Builder inputStream(InputStream inputStream) {
             this.inputStream = inputStream;
             return this;
         }
         
-        public AttachmentBuilder contentType(String contentType) {
+        public Builder contentType(String contentType) {
             this.contentType = contentType;
             return this;
         }
         
-        public AttachmentBuilder fileName(String fileName) {
+        public Builder fileName(String fileName) {
             this.fileName = fileName;
             return this;
         }

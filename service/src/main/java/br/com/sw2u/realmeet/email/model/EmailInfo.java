@@ -16,7 +16,7 @@ public class EmailInfo {
     private final Map<String, Object> templateData;
     
     private EmailInfo(
-            EmailInfoBuilder builder) {
+            Builder builder) {
         this.from = builder.from;
         this.to = builder.to;
         this.cc = builder.cc;
@@ -89,11 +89,11 @@ public class EmailInfo {
         return Objects.hash(from, to, cc, bcc, subject, attachments, template, templateData);
     }
     
-    public static EmailInfoBuilder newEmailInfoBuilder() {
-        return new EmailInfoBuilder();
+    public static Builder newBuilder() {
+        return new Builder();
     }
     
-    public static final class EmailInfoBuilder {
+    public static final class Builder {
         private String from;
         private List<String> to;
         private List<String> cc;
@@ -103,45 +103,45 @@ public class EmailInfo {
         private String template;
         private Map<String, Object> templateData;
         
-        private EmailInfoBuilder() {
+        private Builder() {
         }
         
-        public EmailInfoBuilder from(String from) {
+        public Builder from(String from) {
             this.from = from;
             return this;
         }
         
-        public EmailInfoBuilder to(List<String> to) {
+        public Builder to(List<String> to) {
             this.to = to;
             return this;
         }
         
-        public EmailInfoBuilder cc(List<String> cc) {
+        public Builder cc(List<String> cc) {
             this.cc = cc;
             return this;
         }
         
-        public EmailInfoBuilder bcc(List<String> bcc) {
+        public Builder bcc(List<String> bcc) {
             this.bcc = bcc;
             return this;
         }
         
-        public EmailInfoBuilder subject(String subject) {
+        public Builder subject(String subject) {
             this.subject = subject;
             return this;
         }
         
-        public EmailInfoBuilder attachments(List<Attachment> attachments) {
+        public Builder attachments(List<Attachment> attachments) {
             this.attachments = attachments;
             return this;
         }
         
-        public EmailInfoBuilder template(String template) {
+        public Builder template(String template) {
             this.template = template;
             return this;
         }
         
-        public EmailInfoBuilder templateData(Map<String, Object> templateData) {
+        public Builder templateData(Map<String, Object> templateData) {
             this.templateData = templateData;
             return this;
         }

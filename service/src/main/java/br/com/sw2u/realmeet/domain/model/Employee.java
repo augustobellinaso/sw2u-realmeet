@@ -16,7 +16,7 @@ public class Employee {
     public Employee() {
     }
 
-    private Employee(EmployeeBuilder builder) {
+    private Employee(Builder builder) {
         this.name = builder.name;
         this.email = builder.email;
     }
@@ -54,23 +54,23 @@ public class Employee {
                '}';
     }
 
-    public static EmployeeBuilder newEmployee() {
-        return new EmployeeBuilder();
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
-    public static final class EmployeeBuilder {
+    public static final class Builder {
         private String name;
         private String email;
 
-        private EmployeeBuilder() {
+        private Builder() {
         }
 
-        public EmployeeBuilder name(String name) {
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public EmployeeBuilder email(String email) {
+        public Builder email(String email) {
             this.email = email;
             return this;
         }

@@ -64,7 +64,7 @@ public abstract class BaseIntegrationTest {
         given(clientRepository.findById(TEST_CLIENT_API_KEY)).willReturn(
                 Optional.of(
                         Client
-                                .newClientBuilder()
+                                .newBuilder()
                                 .apiKey(TEST_CLIENT_API_KEY)
                                 .description(TEST_CLIENT_DESCRIPTION)
                                 .active(true)

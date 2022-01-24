@@ -29,7 +29,7 @@ public class EmailInfoBuilder {
     public EmailInfo createEmailInfo(String email, TemplateType templateType, Map<String, Object> templateData, List<Attachment> attachments) {
         var emailTemplate = templateConfigProperties.getEmailTemplate(templateType);
         
-        return EmailInfo.newEmailInfoBuilder()
+        return EmailInfo.newBuilder()
                 .from(emailConfigProperties.getFrom())
                 .subject(emailTemplate.getSubject())
                 .to(List.of(email))
