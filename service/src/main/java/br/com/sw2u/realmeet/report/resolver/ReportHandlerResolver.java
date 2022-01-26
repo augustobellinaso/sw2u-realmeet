@@ -27,6 +27,6 @@ public class ReportHandlerResolver {
         return reportHandlers.stream()
                 .filter(reportHandler -> reportHandlerType == reportHandler.getReportHandlerType())
                 .findFirst()
-                .orElseThrow(() -> new UnsupportedOperationException("Report handler not implemented for type: " + reportHandlerType.name());
+                .orElseThrow(() -> new UnsupportedOperationException("Report handler not implemented for type: " + reportHandlerType.name()));
     }
 }
