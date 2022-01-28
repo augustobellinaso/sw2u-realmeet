@@ -37,7 +37,7 @@ public class AllocationReportHandler extends AbstractReportHandler<Allocation, A
     private final AllocationRepository allocationRepository;
     private final AllocationReportValidator allocationReportValidator;
     
-    protected AllocationReportHandler(@Qualifier("allocationReport") JasperReport jasperReport, AllocationRepository allocationRepository, AllocationReportValidator allocationReportValidator) {
+    public AllocationReportHandler(@Qualifier("allocationReport") JasperReport jasperReport, AllocationRepository allocationRepository, AllocationReportValidator allocationReportValidator) {
         super(jasperReport);
         this.allocationRepository = allocationRepository;
         this.allocationReportValidator = allocationReportValidator;

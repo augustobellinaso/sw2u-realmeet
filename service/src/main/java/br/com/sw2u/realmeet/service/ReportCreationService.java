@@ -40,6 +40,7 @@ public class ReportCreationService {
     private void createReport(ReportHandlerType reportHandlerType, String email, String reportFormatStr, AbstractReportData reportData) {
         var reportFormat = ReportFormat.fromString(reportFormatStr);
         var reportHandler = reportHandlerResolver.resolveReportHandler(reportHandlerType);
+        reportHandler.getReportValidator().validate(reportData);
         var bytes = reportHandler.createReportBytes(reportData, reportFormat);
         
         reportDispatcherService.dispatch(GeneratedReport
