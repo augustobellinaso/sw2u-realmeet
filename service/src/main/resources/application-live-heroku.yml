@@ -8,3 +8,4 @@ spring:
     username: surjmashhsmhnm
   flyway:
     locations: classpath:db/migration/postgresql
+    enabled: false
