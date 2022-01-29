@@ -49,6 +49,7 @@ public class ReportCreationService {
                                                  .reportFormat(reportFormat)
                                                  .email(email)
                                                  .fileName(buildFileName(reportHandlerType, reportFormat))
+                                                 .templateType(reportHandler.getTemplateType())
                                                  .build());
     }
     
