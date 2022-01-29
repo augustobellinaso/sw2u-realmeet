@@ -6,4 +6,3 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://realmeet-db.cj7v6z4tizvd.sa-east-1.rds.amazonaws.com:3306/realmeet?&serverTimezone=UTC&useSSL=false
     username: admin
-\

@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -jar service/targer/realmeet-service-0.0.1-SNAPSHOT.jar
