@@ -20,7 +20,7 @@ import static br.com.sw2u.realmeet.utils.TestConstants.TEST_CLIENT_API_KEY;
 import static br.com.sw2u.realmeet.utils.TestConstants.TEST_CLIENT_DESCRIPTION;
 import static org.mockito.BDDMockito.given;
 
-@ActiveProfiles("integration-test")
+@ActiveProfiles("integration-test-postgresql")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Application.class)
 public abstract class BaseIntegrationTest {
     
